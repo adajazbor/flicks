@@ -1,24 +1,23 @@
 package com.ada.flicks.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.util.Log;
 
 import com.ada.flicks.R;
 import com.ada.flicks.adapters.ItemAdapter;
-import com.ada.flicks.fragments.ItemDetailFragment;
-import com.ada.flicks.fragments.ItemEditFragment;
-import com.ada.flicks.models.Item;
 import com.ada.flicks.network.TheMovieDB;
 import com.ada.flicks.network.dto.nowplaying.Response;
 import com.ada.flicks.network.dto.nowplaying.Result;
 import com.ada.flicks.utils.Constants;
 import com.ada.flicks.utils.Utils;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,15 +43,10 @@ public class MainActivity extends AppCompatActivity {
         rvItems.setLayoutManager(llmLayoutManager);
         rvItems.setAdapter(aToDoAdapter);
 
-        // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
                 readItems();
             }
         });
@@ -76,38 +70,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(int position) {
-                        Result item = todoItems.get(position);
-                        showDetailDialog(item);
+                        Intent i = new Intent(MainActivity.this, DetailActivity.class);
+                        i.putExtra(Constants.PARAM_ITEM, Parcels.wrap(todoItems.get(position)));
+                        startActivity(i);
                     }
                 });
         readItems();
     }
 
-    public void onAddItemButtonClicked(View view) {
-        ItemEditFragment fragment = ItemEditFragment.newInstance(
-                new ItemEditFragment.EditItemDialogListener() {
-                    @Override
-                    public void onItemSaved(Parcelable parcel) {
-                        onDataChanged(true);
-                    }
-                },
-                getString(R.string.title_item_add),
-                new Item());
-
-        fragment.showFragment(getSupportFragmentManager(), null);
-    }
-
-    private void showDetailDialog(Result item) {
-        ItemDetailFragment detailDialogFragment = ItemDetailFragment.newInstance(
-                new ItemDetailFragment.DetailItemDialogListener() {
-                    @Override
-                    public void onDataChanged() {
-                        MainActivity.this.onDataChanged(false);
-                    }
-                },
-                item);
-        detailDialogFragment.show(getSupportFragmentManager(), Constants.FRAGMENT_EDIT_ITEM);
-    }
 
     private void onDataChanged(boolean scrollToLastItem) {
         readItems();
@@ -116,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//==== database opperations
-
+//==== data opperations
     private boolean readItems() {
         TheMovieDB.getMovieList(getMovieListResponseHandler());
         return true;
@@ -127,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         return new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
-                //Toast.makeText(this, R.string.error_read_item, Toast.LENGTH_LONG).show();
+                Log.e(this.getClass().getName(), "Cannot load data");
             }
 
             @Override

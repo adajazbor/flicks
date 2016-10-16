@@ -8,43 +8,44 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="listFont">
-        <item name="android:textSize">15dp</item>
-        <item name="android:textStyle">normal</item>
+    <style name="smallWhiteFont" parent="smallFont">
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="listFontTitle">
-        <item name="android:textSize">20dp</item>
+    <style name="bigBoldWhiteFont">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="regularWhiteFont" parent="regularFont">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 
-    <style name="detailsRegularFont">
+    <style name="regularFont">
         <item name="android:textSize">14dp</item>
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="detailsBoldFont">
+    <style name="regularBoldFont">
         <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="priorityFont">
+    <style name="smallFont">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">12dp</item>
     </style>
 
-    <style name="priorityFontLow" parent="priorityFont">
+    <style name="priorityFontLow" parent="smallFont">
         <item name="android:textColor">@android:color/holo_green_dark</item>
     </style>
 
-    <style name="priorityFontMedium" parent="priorityFont">
+    <style name="priorityFontMedium" parent="smallFont">
         <item name="android:textColor">@android:color/holo_orange_dark</item>
     </style>
 
-    <style name="priorityFontHigh" parent="priorityFont">
+    <style name="priorityFontHigh" parent="smallFont">
         <item name="android:textColor">@android:color/holo_red_dark</item>
     </style>
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ada.flicks.R;
 import com.ada.flicks.network.dto.nowplaying.Result;
+import com.ada.flicks.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -100,10 +101,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         viewHolder.tvOverview.setText(item.getOverview());
         viewHolder.tvTitle.setText(item.getTitle());
         String photoURL = item.getFullPosterPath(Result.PosterSize.w342);
+        int oryWidth = Utils.getDisplayWidth(getContext());
+        int width = oryWidth * 3 / 5;
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
             photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
         }
         Picasso.with(getContext()).load(photoURL)
+                .resize(width, 0)
                 .placeholder(R.drawable.ic_rotate_left_white_24dp)
                 .error(R.drawable.ic_block_white_24dp)
                 .into(viewHolder.ivMovieImage);

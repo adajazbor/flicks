@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/ivMovieImage"
             android:layout_toEndOf="@+id/ivMovieImage"
-            style="@style/listFontTitle"/>
+            style="@style/bigBoldWhiteFont"/>
 
         <TextView
             android:id="@+id/tvOverview"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTitle"
             android:layout_toEndOf="@+id/ivMovieImage"
-            style="@style/listFont"
+            style="@style/smallWhiteFont"
             android:layout_toRightOf="@+id/ivMovieImage" />
 
 </RelativeLayout>
