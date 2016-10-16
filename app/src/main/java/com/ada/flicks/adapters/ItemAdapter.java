@@ -19,8 +19,9 @@ import java.util.List;
 /**
  * Created by ada on 9/13/16.
  */
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int POSTER = 0, VIDEO = 1;
     private List<Result> mItems;
     private ItemArrayAdapterDelegate mDelegate;
     private Context mContext;
@@ -30,35 +31,39 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         void onClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolderPoster extends RecyclerView.ViewHolder {
         public TextView tvOverview;
         public TextView tvTitle;
         public ImageView ivMovieImage;
 
-        public ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
+        public ViewHolderPoster(View itemView) {
             super(itemView);
 
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
 
-            /*
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return mDelegate.onLongClick(getAdapterPosition());
-                }
-            });
-            */
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mDelegate.onClick(getAdapterPosition());
                 }
             });
+        }
+    }
 
+    public class ViewHolderVideo extends RecyclerView.ViewHolder {
+        public ImageView ivMovieImage;
+
+        public ViewHolderVideo(View itemView) {
+            super(itemView);
+            ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDelegate.onClick(getAdapterPosition());
+                }
+            });
         }
     }
 
@@ -75,39 +80,72 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     @Override
-    public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder = null;
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Inflate the custom layout
-        View itemRowView = inflater.inflate(R.layout.item_item, parent, false);
-
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(itemRowView);
+        switch (viewType) {
+            case VIDEO:
+                viewHolder = new ViewHolderVideo(inflater.inflate(R.layout.video_item, parent, false));
+                break;
+            default:
+                viewHolder = new ViewHolderPoster(inflater.inflate(R.layout.item_item, parent, false));
+                break;
+        }
         return viewHolder;
     }
 
     // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(ItemAdapter.ViewHolder viewHolder, int position) {
-        // Get the data model based on position
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        switch (viewHolder.getItemViewType()) {
+            case VIDEO:
+                ViewHolderVideo vh1 = (ViewHolderVideo) viewHolder;
+                configureViewHolderVideo(vh1, position);
+                break;
+            default:
+                ViewHolderPoster vh2 = (ViewHolderPoster) viewHolder;
+                configureViewHolderPoster(vh2, position);
+                break;
+        }
+    }
+
+    private void configureViewHolderPoster(ViewHolderPoster viewHolder, int position) {
         Result item = mItems.get(position);
-        // Set item views based on your views and data model
         viewHolder.tvOverview.setText(item.getOverview());
         viewHolder.tvTitle.setText(item.getTitle());
         String photoURL = item.getFullPosterPath(Result.PosterSize.w342);
         int oryWidth = Utils.getDisplayWidth(getContext());
-        int width = oryWidth * 3 / 5;
+        int width = oryWidth / 2;
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
             photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
+            int with = oryWidth * 2 / 3;
         }
         Picasso.with(getContext()).load(photoURL)
                 .resize(width, 0)
                 .placeholder(R.drawable.ic_rotate_left_white_24dp)
                 .error(R.drawable.ic_block_white_24dp)
                 .into(viewHolder.ivMovieImage);
-        //.fit().centerInside()
     }
+
+    private void configureViewHolderVideo(ViewHolderVideo viewHolder, int position) {
+        Result item = mItems.get(position);
+        //viewHolder.tvOverview.setText(item.getOverview());
+        //viewHolder.tvTitle.setText(item.getTitle());
+        String photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
+        int oryWidth = Utils.getDisplayWidth(getContext());
+        int width = oryWidth;
+        if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
+            int with = oryWidth;
+        }
+        Picasso.with(getContext()).load(photoURL)
+                .resize(width, 0)
+                .placeholder(R.drawable.ic_rotate_left_white_24dp)
+                .error(R.drawable.ic_block_white_24dp)
+                .into(viewHolder.ivMovieImage);
+    }
+
 
     // Returns the total count of items in the list
     @Override
@@ -116,6 +154,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             return 0;
         }
         return mItems.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Result item = mItems.get(position);
+        if (item.getVoteAverage() > 5.0) {
+            return VIDEO;
+        }
+        return POSTER;
     }
 
     // Clean all elements of the recycler
