@@ -24,6 +24,7 @@ import org.parceler.Parcels;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class DetailActivity extends YouTubeBaseActivity {
 
@@ -91,8 +92,9 @@ public class DetailActivity extends YouTubeBaseActivity {
     private void setMovieImage() {
         ytpVideo.setVisibility(View.INVISIBLE);
         ivMovieImage.setVisibility(View.VISIBLE);
-        Picasso.with(this).load(mItem.getFullBackdropPath(Result.BackDropSize.w780))
+        Picasso.with(this).load(mItem.getFullBackdropPath(Result.BackDropSize.original))
                 .resize(Utils.getDisplayWidth(this), 0)
+                .transform(new RoundedCornersTransformation(10, 10))
                 //.fit().centerCrop()
                 .placeholder(R.drawable.ic_rotate_left_white_24dp)
                 .error(R.drawable.ic_block_white_24dp)

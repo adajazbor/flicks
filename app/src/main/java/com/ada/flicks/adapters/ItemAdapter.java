@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by ada on 9/13/16.
@@ -120,11 +121,12 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int oryWidth = Utils.getDisplayWidth(getContext());
         int width = oryWidth / 2;
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
-            photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
+            photoURL = item.getFullBackdropPath(Result.BackDropSize.original);
             int with = oryWidth * 2 / 3;
         }
         Picasso.with(getContext()).load(photoURL)
                 .resize(width, 0)
+                .transform(new RoundedCornersTransformation(10, 10))
                 .placeholder(R.drawable.ic_rotate_left_white_24dp)
                 .error(R.drawable.ic_block_white_24dp)
                 .into(viewHolder.ivMovieImage);
@@ -134,7 +136,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Result item = mItems.get(position);
         //viewHolder.tvOverview.setText(item.getOverview());
         //viewHolder.tvTitle.setText(item.getTitle());
-        String photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
+        String photoURL = item.getFullBackdropPath(Result.BackDropSize.original);
         int oryWidth = Utils.getDisplayWidth(getContext());
         int width = oryWidth;
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
@@ -142,6 +144,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         Picasso.with(getContext()).load(photoURL)
                 .resize(width, 0)
+                .transform(new RoundedCornersTransformation(10, 10))
                 .placeholder(R.drawable.ic_rotate_left_white_24dp)
                 .error(R.drawable.ic_block_white_24dp)
                 .into(viewHolder.ivMovieImage);
