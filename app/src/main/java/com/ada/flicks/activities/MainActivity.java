@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager llmLayoutManager;
     private SwipeRefreshLayout swipeContainer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +77,6 @@ public class MainActivity extends AppCompatActivity {
         readItems();
     }
 
-
-    private void onDataChanged(boolean scrollToLastItem) {
-        readItems();
-        if (scrollToLastItem) {
-            llmLayoutManager.smoothScrollToPosition(rvItems, null, todoItems.size() - 1);
-        }
-    }
 
 //==== data opperations
     private boolean readItems() {

@@ -22,7 +22,6 @@ import org.parceler.Parcels;
 public class DetailActivity extends AppCompatActivity {
 
     private Result mItem;
-    private String[] mPriorities;
 
     private TextView tvTitle;
     private TextView tvOverview;

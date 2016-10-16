@@ -21,11 +21,6 @@ import java.util.List;
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
-    private final static int [] mPriorityStyles = new int [] {
-            R.style.priorityFontLow,
-            R.style.priorityFontMedium,
-            R.style.priorityFontHigh};
-
     private List<Result> mItems;
     private ItemArrayAdapterDelegate mDelegate;
     private Context mContext;
