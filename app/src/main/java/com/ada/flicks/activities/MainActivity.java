@@ -3,7 +3,6 @@ package com.ada.flicks.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +14,7 @@ import com.ada.flicks.network.dto.nowplaying.Response;
 import com.ada.flicks.network.dto.nowplaying.Result;
 import com.ada.flicks.utils.Constants;
 import com.ada.flicks.utils.Utils;
+import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.parceler.Parcels;
@@ -24,7 +24,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends YouTubeBaseActivity {
 
     private List<Result> todoItems = new ArrayList<>();
     private ItemAdapter aToDoAdapter;

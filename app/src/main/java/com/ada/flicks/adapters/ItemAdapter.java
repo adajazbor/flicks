@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 import com.ada.flicks.R;
 import com.ada.flicks.network.dto.nowplaying.Result;
+import com.ada.flicks.utils.Constants;
 import com.ada.flicks.utils.Utils;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,11 +57,13 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class ViewHolderVideo extends RecyclerView.ViewHolder {
-        public ImageView ivMovieImage;
+        //public ImageView ivMovieImage;
+        public YouTubePlayerView ytpVideo;
 
         public ViewHolderVideo(View itemView) {
             super(itemView);
-            ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
+          //  ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
+            ytpVideo = (YouTubePlayerView) itemView.findViewById(R.id.player);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -129,8 +135,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .into(viewHolder.ivMovieImage);
     }
 
-    private void configureViewHolderVideo(ViewHolderVideo viewHolder, int position) {
-        Result item = mItems.get(position);
+    private void configureViewHolderVideo(ViewHolderVideo viewHolder, final int position) {
+        final Result item = mItems.get(position);
         //viewHolder.tvOverview.setText(item.getOverview());
         //viewHolder.tvTitle.setText(item.getTitle());
         String photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
@@ -139,11 +145,48 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
             int with = oryWidth;
         }
-        Picasso.with(getContext()).load(photoURL)
-                .resize(width, 0)
-                .placeholder(R.drawable.ic_rotate_left_white_24dp)
-                .error(R.drawable.ic_block_white_24dp)
-                .into(viewHolder.ivMovieImage);
+        if (item.getYouTubeTrailerKey() != null) {
+            System.out.println("bind: " + item.getYouTubeTrailerKey());
+            viewHolder.ytpVideo.initialize(Constants.YOUTUBE_API_KEY,
+                    new YouTubePlayer.OnInitializedListener() {
+                        @Override
+                        public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                            YouTubePlayer youTubePlayer, boolean b) {
+                            if (!b) {
+                                System.out.println("binded: " + item.getYouTubeTrailerKey());
+                                // do any work here to cue video, play video, etc.
+                                youTubePlayer.cueVideo(item.getYouTubeTrailerKey());
+                                System.out.println("binded done: " + item.getYouTubeTrailerKey());
+                            }
+                        }
+                        @Override
+                        public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                            YouTubeInitializationResult youTubeInitializationResult) {
+                            System.out.println("binded: error " + item.getYouTubeTrailerKey());
+                            //setMovieImage();
+                        }
+                    });
+        } else {
+            System.out.println("bind: " + item.getYouTubeTrailerKey());
+            viewHolder.ytpVideo.initialize(Constants.YOUTUBE_API_KEY,
+                    new YouTubePlayer.OnInitializedListener() {
+                        @Override
+                        public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                            YouTubePlayer youTubePlayer, boolean b) {
+
+                            System.out.println("binded: " + item.getYouTubeTrailerKey());
+                            // do any work here to cue video, play video, etc.
+                            youTubePlayer.cueVideo("xVh-7ywKpE");
+                            System.out.println("binded done: " + item.getYouTubeTrailerKey());
+                        }
+                        @Override
+                        public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                            YouTubeInitializationResult youTubeInitializationResult) {
+                            System.out.println("binded: error " + item.getYouTubeTrailerKey());
+                            //setMovieImage();
+                        }
+                    });
+        }
     }
 
 
