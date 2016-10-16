@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by ada on 9/13/16.
  */
@@ -32,16 +35,14 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class ViewHolderPoster extends RecyclerView.ViewHolder {
-        public TextView tvOverview;
-        public TextView tvTitle;
-        public ImageView ivMovieImage;
+        @BindView(R.id.tvOverview) TextView tvOverview;
+        @BindView(R.id.tvTitle) TextView tvTitle;
+        @BindView(R.id.ivMovieImage) ImageView ivMovieImage;
 
         public ViewHolderPoster(View itemView) {
             super(itemView);
 
-            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -53,11 +54,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class ViewHolderVideo extends RecyclerView.ViewHolder {
-        public ImageView ivMovieImage;
+        @BindView(R.id.ivMovieImage) ImageView ivMovieImage;
 
         public ViewHolderVideo(View itemView) {
             super(itemView);
-            ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

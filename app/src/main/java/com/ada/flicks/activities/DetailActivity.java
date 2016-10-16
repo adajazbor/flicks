@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,17 +21,21 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class DetailActivity extends YouTubeBaseActivity {
 
     private Result mItem;
 
-    private TextView tvTitle;
-    private TextView tvOverview;
-    private TextView tvPopularity;
-    private RatingBar rbRating;
-    private TextView tvRelease;
-    private YouTubePlayerView ytpVideo;
-    private ImageView ivMovieImage;
+    @BindView(R.id.tvTitle) TextView tvTitle;
+    @BindView(R.id.tvOverview)  TextView tvOverview;
+    @BindView(R.id.tvPopularity)  TextView tvPopularity;
+    @BindView(R.id.rbRating)  RatingBar rbRating;
+    @BindView(R.id.tvRelease)  TextView tvRelease;
+    @BindView(R.id.player)  YouTubePlayerView ytpVideo;
+    @BindView(R.id.ivMovieImage)  ImageView ivMovieImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +43,14 @@ public class DetailActivity extends YouTubeBaseActivity {
         setContentView(R.layout.activity_detail);
 
         mItem = Parcels.unwrap(getIntent().getParcelableExtra(Constants.PARAM_ITEM));
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvOverview = (TextView) findViewById(R.id.tvOverview);
-        tvPopularity = (TextView) findViewById(R.id.tvPopularity);
-        rbRating = (RatingBar) findViewById(R.id.rbRating);
-        tvRelease = (TextView) findViewById(R.id.tvRelease);
-        ytpVideo = (YouTubePlayerView) findViewById(R.id.player);
-        ivMovieImage = (ImageView) findViewById(R.id.ivMovieImage);
+
+        ButterKnife.bind(this);
         LayerDrawable stars = (LayerDrawable) rbRating.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
         stars.getDrawable(0).setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
 
         refreshUiFromItem();
-
-        Button btnBack = (Button) findViewById(R.id.btnBack);
-        View.OnClickListener onBack = getOnBackListener();
-        btnBack.setOnClickListener(onBack);
     }
 
     private void refreshUiFromItem() {
@@ -105,12 +99,9 @@ public class DetailActivity extends YouTubeBaseActivity {
                 .into(ivMovieImage);
     }
 
-    private View.OnClickListener getOnBackListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        };
+
+    @OnClick(R.id.btnBack)
+    public void onClick(View view) {
+        finish();
     }
 }
