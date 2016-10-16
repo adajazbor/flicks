@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.ada.flicks.R;
 import com.ada.flicks.models.Item;
+import com.ada.flicks.network.dto.nowplaying.Result;
 import com.ada.flicks.utils.Constants;
-import com.ada.flicks.utils.Utils;
 
 import org.parceler.Parcels;
 
@@ -42,7 +42,7 @@ public class ItemDetailFragment extends DialogFragment {
         void onDataChanged();
     }
 
-    public static ItemDetailFragment newInstance(DetailItemDialogListener listener, Item item) {
+    public static ItemDetailFragment newInstance(DetailItemDialogListener listener, Result item) {
         ItemDetailFragment frag = new ItemDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(Constants.PARAM_ITEM, Parcels.wrap(item));
@@ -87,11 +87,11 @@ public class ItemDetailFragment extends DialogFragment {
     }
 
     private void refreshUiFromItem() {
-        tvName.setText(mItem.getName());
-        tvDue.setText(Utils.formatDay(mItem.getDueDate()));
-        tvNotes.setText(mItem.getNotes());
-        tvPriority.setText(mPriorities[mItem.getPriority()]);
-        tvStatus.setText(mItem.getStatus());
+        //tvName.setText(mItem.getName());
+        //tvDue.setText(Utils.formatDay(mItem.getDueDate()));
+        //tvNotes.setText(mItem.getNotes());
+        //tvPriority.setText(mPriorities[mItem.getPriority()]);
+        //tvStatus.setText(mItem.getStatus());
     }
 
     private View.OnClickListener getOnEditListener() {

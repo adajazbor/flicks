@@ -1,27 +1,61 @@
 package com.ada.flicks.network.dto.nowplaying;
 
-import java.util.Date;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by ada on 10/15/16.
  */
 public class Dates {
-    private Date maximum;
-    private Date minimum;
 
-    public Date getMaximum() {
+    @SerializedName("maximum")
+    @Expose
+    private String maximum;
+    @SerializedName("minimum")
+    @Expose
+    private String minimum;
+
+    /**
+     * No args constructor for use in serialization
+     */
+    public Dates() {
+    }
+
+    /**
+     * @param minimum
+     * @param maximum
+     */
+    public Dates(String maximum, String minimum) {
+        this.maximum = maximum;
+        this.minimum = minimum;
+    }
+
+    /**
+     * @return The maximum
+     */
+    public String getMaximum() {
         return maximum;
     }
 
-    public void setMaximum(Date maximum) {
+    /**
+     * @param maximum The maximum
+     */
+    public void setMaximum(String maximum) {
         this.maximum = maximum;
     }
 
-    public Date getMinimum() {
+    /**
+     * @return The minimum
+     */
+    public String getMinimum() {
         return minimum;
     }
 
-    public void setMinimum(Date minimum) {
+    /**
+     * @param minimum The minimum
+     */
+    public void setMinimum(String minimum) {
         this.minimum = minimum;
     }
+
 }

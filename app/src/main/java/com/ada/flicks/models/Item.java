@@ -1,109 +1,174 @@
 package com.ada.flicks.models;
 
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.parceler.Parcel;
 
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Created by ada on 9/13/16.
- */
-@Table(database = FlicksDatabase.class)
+//@Table(database = FlicksDatabase.class)
 @Parcel(analyze={Item.class})
 public class Item extends BaseModel {
 
-    @Column
-    @PrimaryKey(autoincrement = true)
-    int id;
+    private String voteAverage;
 
-    @Column(name = "name")
-    String name;
+    private String backdropPath;
 
-    @Column(name = "due_date")
-    Date dueDate;
+    private Boolean adult;
 
-    //TODO Enum?
-    @Column(name = "status")
-    String status;
+    private Long id;
 
-    //TODO Enum
-    @Column(name = "priority")
-    int priority;
+    private String title;
 
-    @Column(name = "notes")
-    String notes;
+    private String overview;
 
-    public Item(String status, String name) {
-        this.status = status;
-        this.name = name;
+    private String originalLanguage;
+
+    private Integer[] genreIds;
+
+    private Date releaseDate;
+
+    private String originalTitle;
+
+    public String getVoteAverage() {
+        return voteAverage;
     }
 
-    public Item() {
-        super();
+    public void setVoteAverage(String voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
-    public int getId() {
-        return this.id;
-    }
-    public String getName() {
-        return this.name;
-    }
-    public String getStatus() {
-        return this.status;
-    }
-    public Date getDueDate() {
-        return this.dueDate;
-    }
-    public int getPriority() {
-        return this.priority;
-    }
-    public String getNotes() {
-        return this.notes;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setId(int id) {
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
+    public Boolean getAdult() {
+        return adult;
+    }
+
+    public void setAdult(Boolean adult) {
+        this.adult = adult;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-    public void setNotes(String notes) {
-        this.notes = notes;
+
+    public String getTitle() {
+        return title;
     }
 
-    //====== DB operations
-
-    public static Item get(int id) {
-        return SQLite.select().from(Item.class).where(Item_Table.id.eq(id)).querySingle();
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public static List<Item> getAll() {
-        return SQLite.select().from(Item.class).orderBy(Item_Table.priority, false).queryList();
+    public String getOverview() {
+        return overview;
     }
 
-    public static void save(Item item) {
-        item.save();
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
-    public static void delete(Item item) {
-        item.delete();
+    public String getOriginalLanguage() {
+        return originalLanguage;
     }
 
-    //======= helpers
+    public void setOriginalLanguage(String originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public Integer[] getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(Integer[] genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public Boolean getVideo() {
+        return video;
+    }
+
+    public void setVideo(Boolean video) {
+        this.video = video;
+    }
+
+    public Long getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Long popularity) {
+        this.popularity = popularity;
+    }
+
+    private Integer voteCount;
+
+    private String posterPath;
+
+    private Boolean video;
+
+    private Long popularity;
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "voteAverage='" + voteAverage + '\'' +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", adult=" + adult +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", overview='" + overview + '\'' +
+                ", originalLanguage='" + originalLanguage + '\'' +
+                ", genreIds=" + Arrays.toString(genreIds) +
+                ", releaseDate=" + releaseDate +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", voteCount=" + voteCount +
+                ", posterPath='" + posterPath + '\'' +
+                ", video=" + video +
+                ", popularity=" + popularity +
+                '}';
+    }
 
 }

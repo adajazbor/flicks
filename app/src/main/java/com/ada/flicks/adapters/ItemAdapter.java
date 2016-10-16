@@ -1,14 +1,17 @@
 package com.ada.flicks.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ada.flicks.R;
-import com.ada.flicks.models.Item;
+import com.ada.flicks.network.dto.nowplaying.Result;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,10 +25,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             R.style.priorityFontMedium,
             R.style.priorityFontHigh};
 
-    private List<Item> mItems;
+    private List<Result> mItems;
     private ItemArrayAdapterDelegate mDelegate;
     private Context mContext;
-    private String[] mPriorities;
 
     public interface ItemArrayAdapterDelegate {
         boolean onLongClick(int position);
@@ -33,38 +35,42 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvItemName;
-        public TextView tvItemPriority;
+        public TextView tvOverview;
+        public TextView tvTitle;
+        public ImageView ivMovieImage;
 
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            tvItemName = (TextView) itemView.findViewById(R.id.tvItemName);
-            tvItemPriority = (TextView) itemView.findViewById(R.id.tvItemPriority);
+            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            ivMovieImage = (ImageView) itemView.findViewById(R.id.ivMovieImage);
 
+            /*
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     return mDelegate.onLongClick(getAdapterPosition());
                 }
             });
+            */
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mDelegate.onClick(getAdapterPosition());
                 }
             });
+
         }
     }
 
     // Pass in the contact array into the constructor
-    public ItemAdapter(Context context, List<Item> items, ItemArrayAdapterDelegate delegate) {
+    public ItemAdapter(Context context, List<Result> items, ItemArrayAdapterDelegate delegate) {
         mItems = items;
         mContext = context;
         mDelegate = delegate;
-        mPriorities = context.getResources().getStringArray(R.array.array_priorities);
     }
 
     // Easy access to the context object in the recyclerview
@@ -89,17 +95,39 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ItemAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        Item item = mItems.get(position);
-
+        Result item = mItems.get(position);
         // Set item views based on your views and data model
-        viewHolder.tvItemName.setText(item.getName());
-        viewHolder.tvItemPriority.setText(mPriorities[item.getPriority()]);
-        viewHolder.tvItemPriority.setTextAppearance(mContext, mPriorityStyles[item.getPriority()]);
+        viewHolder.tvOverview.setText(item.getOverview());
+        viewHolder.tvTitle.setText(item.getTitle());
+        String photoURL = item.getFullPosterPath(Result.PosterSize.w342);
+        if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
+            photoURL = item.getFullBackdropPath(Result.BackDropSize.w780);
+        }
+        Picasso.with(getContext()).load(photoURL)
+                .placeholder(R.drawable.ic_rotate_left_white_24dp)
+                .error(R.drawable.ic_block_white_24dp)
+                .into(viewHolder.ivMovieImage);
+        //.fit().centerInside()
     }
 
     // Returns the total count of items in the list
     @Override
     public int getItemCount() {
+        if(mItems == null) {
+            return 0;
+        }
         return mItems.size();
+    }
+
+    // Clean all elements of the recycler
+    public void clear() {
+        mItems.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items
+    public void addAll(List<Result> list) {
+        mItems.addAll(list);
+        notifyDataSetChanged();
     }
 }

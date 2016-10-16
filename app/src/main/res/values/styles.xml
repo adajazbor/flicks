@@ -9,9 +9,17 @@
     </style>
 
     <style name="listFont">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="listFontTitle">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 
     <style name="detailsRegularFont">
         <item name="android:textSize">14dp</item>

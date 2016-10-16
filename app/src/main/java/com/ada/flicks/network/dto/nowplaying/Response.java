@@ -1,60 +1,140 @@
 package com.ada.flicks.network.dto.nowplaying;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by ada on 10/15/16.
  */
 public class Response {
-    private long page;
-    private List<Result> results;
-    private Dates dates;
-    private long total_pages;
-    private long total_results;
 
-    public Response() {
-        results = new ArrayList<Result>();
-    }
+        @SerializedName("page")
+        @Expose
+        private Integer page;
+        @SerializedName("results")
+        @Expose
+        private List<Result> results = new ArrayList<Result>();
+        @SerializedName("dates")
+        @Expose
+        private Dates dates;
+        @SerializedName("total_pages")
+        @Expose
+        private Integer totalPages;
+        @SerializedName("total_results")
+        @Expose
+        private Integer totalResults;
 
-    public long getPage() {
-        return page;
-    }
+        /**
+         * No args constructor for use in serialization
+         *
+         */
+        public Response() {
+        }
 
-    public void setPage(long page) {
-        this.page = page;
-    }
+        /**
+         *
+         * @param results
+         * @param totalResults
+         * @param dates
+         * @param page
+         * @param totalPages
+         */
+        public Response(Integer page, List<Result> results, Dates dates, Integer totalPages, Integer totalResults) {
+            this.page = page;
+            this.results = results;
+            this.dates = dates;
+            this.totalPages = totalPages;
+            this.totalResults = totalResults;
+        }
 
-    public List<Result> getResults() {
-        return results;
-    }
+        /**
+         *
+         * @return
+         * The page
+         */
+        public Integer getPage() {
+            return page;
+        }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
-    }
+        /**
+         *
+         * @param page
+         * The page
+         */
+        public void setPage(Integer page) {
+            this.page = page;
+        }
 
-    public Dates getDates() {
-        return dates;
-    }
+        /**
+         *
+         * @return
+         * The results
+         */
+        public List<Result> getResults() {
+            return results;
+        }
 
-    public void setDates(Dates dates) {
-        this.dates = dates;
-    }
+        /**
+         *
+         * @param results
+         * The results
+         */
+        public void setResults(List<Result> results) {
+            this.results = results;
+        }
 
-    public long getTotal_pages() {
-        return total_pages;
-    }
+        /**
+         *
+         * @return
+         * The dates
+         */
+        public Dates getDates() {
+            return dates;
+        }
 
-    public void setTotal_pages(long total_pages) {
-        this.total_pages = total_pages;
-    }
+        /**
+         *
+         * @param dates
+         * The dates
+         */
+        public void setDates(Dates dates) {
+            this.dates = dates;
+        }
 
-    public long getTotal_results() {
-        return total_results;
-    }
+        /**
+         *
+         * @return
+         * The totalPages
+         */
+        public Integer getTotalPages() {
+            return totalPages;
+        }
 
-    public void setTotal_results(long total_results) {
-        this.total_results = total_results;
-    }
+        /**
+         *
+         * @param totalPages
+         * The total_pages
+         */
+        public void setTotalPages(Integer totalPages) {
+            this.totalPages = totalPages;
+        }
 
+        /**
+         *
+         * @return
+         * The totalResults
+         */
+        public Integer getTotalResults() {
+            return totalResults;
+        }
+
+        /**
+         *
+         * @param totalResults
+         * The total_results
+         */
+        public void setTotalResults(Integer totalResults) {
+            this.totalResults = totalResults;
+        }
 }

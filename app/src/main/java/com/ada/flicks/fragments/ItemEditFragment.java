@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import com.ada.flicks.R;
 import com.ada.flicks.models.Item;
 import com.ada.flicks.utils.Constants;
-import com.ada.flicks.utils.Utils;
 
 import org.parceler.Parcels;
 
@@ -83,21 +82,21 @@ public class ItemEditFragment extends DialogFragment {
         mItem = Parcels.unwrap(getArguments().getParcelable(Constants.PARAM_ITEM));
 
         etName = (EditText) view.findViewById(R.id.etName);
-        etName.setText(mItem.getName());
+       // etName.setText(mItem.getName());
 
         dpDue = (DatePicker) view.findViewById(R.id.dpDue);
-        dateToDatePicker(mItem.getDueDate());
+       // dateToDatePicker(mItem.getDueDate());
 
         etNotes = (EditText) view.findViewById(R.id.etNotes);
-        etNotes.setText(mItem.getNotes());
+      //  etNotes.setText(mItem.getNotes());
 
         sPriority = (Spinner) view.findViewById(R.id.sPriority);
         sPriority.setAdapter(getArrayAdapter(view.getContext(), R.array.array_priorities));
-        sPriority.setSelection(mItem.getPriority());
+       // sPriority.setSelection(mItem.getPriority());
 
         sStatus = (Spinner) view.findViewById(R.id.sStatus);
         sStatus.setAdapter(getArrayAdapter(view.getContext(), R.array.array_statuses));
-        Utils.setSpinnerItemByValue(sStatus, mItem.getStatus());
+      //  Utils.setSpinnerItemByValue(sStatus, mItem.getStatus());
 
         Button btnSave = (Button) view.findViewById(R.id.btnSave);
         View.OnClickListener onSave = getOnSaveListener();
@@ -116,12 +115,12 @@ public class ItemEditFragment extends DialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mItem.setName(etName.getText().toString());
-                mItem.setStatus((String) sStatus.getSelectedItem());
-                mItem.setPriority(sPriority.getSelectedItemPosition());
-                mItem.setNotes((String) etNotes.getText().toString());
-                mItem.setDueDate(datePickerToDate());
-                writeItem(mItem);
+             //   mItem.setName(etName.getText().toString());
+             //   mItem.setStatus((String) sStatus.getSelectedItem());
+              //  mItem.setPriority(sPriority.getSelectedItemPosition());
+               // mItem.setNotes((String) etNotes.getText().toString());
+             //   mItem.setDueDate(datePickerToDate());
+               // writeItem(mItem);
                 mListener.onItemSaved(Parcels.wrap(mItem));
                 dismiss();
             }
@@ -168,7 +167,7 @@ public class ItemEditFragment extends DialogFragment {
 
     //======= db operations
     private void writeItem(Item item) {
-        Item.save(item);
+     //   Item.save(item);
     }
 
 }

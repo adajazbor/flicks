@@ -3,6 +3,9 @@ package com.ada.flicks.utils;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,6 +15,14 @@ import java.util.Date;
 public class Utils {
 
     public static final String FORMAT_DAY = "m/d/yy";
+    public static final String GSON_DATE_FORMAT = "yyyy-MM-dd";
+
+    public static <T> T parseJSON(String response,  Class<T> classOfT) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat(GSON_DATE_FORMAT);
+        Gson gson = gsonBuilder.create();
+        return gson.fromJson(response, classOfT);
+    }
 
     public static String formatDay(Date date) {
         if (date == null) {

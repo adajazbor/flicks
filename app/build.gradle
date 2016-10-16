@@ -40,5 +40,6 @@ dependencies {
     apt 'org.parceler:parceler:1.1.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
+    compile 'com.google.code.gson:gson:2.7'
 }
 
