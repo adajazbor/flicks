@@ -38,7 +38,7 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories: <a href="Video on Dropbox - click it and it will start playing in your browser.">https://www.dropbox.com/s/2bour2r2e3ciscv/flick_demo.mp4?raw=1</a>
+Here's a walkthrough of implemented user stories: <a href="https://www.dropbox.com/s/2bour2r2e3ciscv/flick_demo.mp4?raw=1">Video on Dropbox - click it and it will start playing in your browser.</a>
 
 ## Notes
 
