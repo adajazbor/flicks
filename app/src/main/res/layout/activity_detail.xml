@@ -15,6 +15,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ada.flicks.activities.DetailActivity">
 
+    <RelativeLayout
+        android:id="@+id/imageVideoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
     <ImageView
         android:id="@+id/ivMovieImage"
         android:layout_width="match_parent"
@@ -26,13 +36,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:src="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Title"
         style="@style/bigBoldWhiteFont"
-        android:layout_below="@+id/ivMovieImage"
+        android:layout_below="@+id/imageVideoContainer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

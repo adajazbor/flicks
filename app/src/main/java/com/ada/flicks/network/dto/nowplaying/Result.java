@@ -77,7 +77,10 @@ public class Result {
         @Expose
         Double voteAverage;
 
-        /**
+        String youTubeTrailerKey;
+
+
+    /**
          * No args constructor for use in serialization
          */
         public Result() {
@@ -328,5 +331,14 @@ public class Result {
          */
         public void setVoteAverage(Double voteAverage) {
             this.voteAverage = voteAverage;
+        }
+
+
+        public String getYouTubeTrailerKey() {
+            return youTubeTrailerKey;
+        }
+
+        public void setYouTubeTrailerKey(String youTubeTrailerKey) {
+            this.youTubeTrailerKey = youTubeTrailerKey;
         }
     }

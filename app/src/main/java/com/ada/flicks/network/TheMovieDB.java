@@ -14,6 +14,13 @@ public class TheMovieDB {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("api_key", Constants.THE_MOVIE_DB_API_KEY);
-        client.get(Constants.THE_MOVIE_DB_URL, params, responseHandler);
+        client.get(Constants.MOVIES_URL, params, responseHandler);
+    }
+
+    public static void getTrailerList(TextHttpResponseHandler responseHandler, Integer movieId) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("api_key", Constants.THE_MOVIE_DB_API_KEY);
+        client.get(String.format(Constants.TRAILERS_FOR_MOVIE_URL, String.valueOf(movieId)), params, responseHandler);
     }
 }

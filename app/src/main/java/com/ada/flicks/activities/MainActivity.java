@@ -98,8 +98,26 @@ public class MainActivity extends AppCompatActivity {
                 todoItems.addAll(reponse.getResults());
                 aToDoAdapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
+                downloadTrailerInfo();
             }
         };
+    }
+
+    private void downloadTrailerInfo() {
+        for (final Result movie : todoItems) {
+            TheMovieDB.getTrailerList(new TextHttpResponseHandler() {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String res, Throwable throwable) {
+                    Log.e(this.getClass().getName(), "Cannot load trailer");
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String res) {
+                    com.ada.flicks.network.dto.trailer.Response reponse = Utils.parseJSON(res, com.ada.flicks.network.dto.trailer.Response.class);
+                    movie.setYouTubeTrailerKey((reponse.getFirstTrailer() == null ? null : reponse.getFirstTrailer().getKey()));
+                }
+            }, movie.getId());
+        }
     }
 
 }
