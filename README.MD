@@ -44,6 +44,8 @@ Here's a walkthrough of implemented user stories: <a href="https://www.dropbox.c
 
 Describe any challenges encountered while building the app.
 
+**I could not play videos on the list. The reason is when I bind one Youtube player on the list row, the other ones stop playing / displaying content. It looks like there can be at most one Youtube player playing or even displaying preview at the same time.
+<a href="https://www.dropbox.com/s/hp9023vd4q1geb3/youTube_and_recycleView.mp4?raw=1">I made a video to illustrate this problem</a>.**
 
 
 ## Open-source libraries used
