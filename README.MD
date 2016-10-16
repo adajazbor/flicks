@@ -38,9 +38,7 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
-
-<img src='https://www.dropbox.com/s/2bour2r2e3ciscv/flick_demo.mp4?raw=1' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Here's a walkthrough of implemented user stories: <a href="Video on Dropbox">https://www.dropbox.com/s/2bour2r2e3ciscv/flick_demo.mp4?raw=1'/>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
