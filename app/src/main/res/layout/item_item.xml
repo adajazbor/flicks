@@ -37,8 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTitle"
             android:layout_toEndOf="@+id/ivMovieImage"
-            style="@style/smallWhiteFont"
-            android:layout_toRightOf="@+id/ivMovieImage" />
+            android:layout_toRightOf="@+id/ivMovieImage"
+            android:ellipsize="end"
+            android:maxLines="12"
+            style="@style/smallWhiteFont" />
 
 </RelativeLayout>
 
