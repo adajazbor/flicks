@@ -38,7 +38,11 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories: <img src="http://i.imgur.com/rPhVfBh.gifv"/>
+Here's a walkthrough of implemented user stories: 
+Here's a walkthrough of implemented user stories: <video width="320" height="240" controls>
+                                                    <source src="https://www.dropbox.com/s/2bour2r2e3ciscv/flick_demo.mp4?raw=1" type="video/mp4">
+                                                    Your browser does not support the video tag. Vidoe URL: https://www.dropbox.com/s/2bour2r2e3ciscv/flick_demo.mp4?raw=1
+                                                  </video>
 
 ## Notes
 
