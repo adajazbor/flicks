@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ada.flicks.R;
@@ -39,6 +40,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.tvOverview) TextView tvOverview;
         @BindView(R.id.tvTitle) TextView tvTitle;
         @BindView(R.id.ivMovieImage) ImageView ivMovieImage;
+        @BindView(R.id.tvPlayTriangle) TextView tvPlayTriangle;
+        @BindView(R.id.rlMovieContainer) RelativeLayout rlMovieContainer;
 
         public ViewHolderPoster(View itemView) {
             super(itemView);
@@ -56,6 +59,8 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class ViewHolderVideo extends RecyclerView.ViewHolder {
         @BindView(R.id.ivMovieImage) ImageView ivMovieImage;
+        @BindView(R.id.tvPlayTriangle) TextView tvPlayTriangle;
+        @BindView(R.id.rlMovieContainer) RelativeLayout rlMovieContainer;
 
         public ViewHolderVideo(View itemView) {
             super(itemView);
@@ -115,15 +120,18 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void configureViewHolderPoster(ViewHolderPoster viewHolder, int position) {
         Result item = mItems.get(position);
-        viewHolder.tvOverview.setText(item.getOverview());
-        viewHolder.tvTitle.setText(item.getTitle());
         String photoURL = item.getFullPosterPath(Result.PosterSize.w342);
         int oryWidth = Utils.getDisplayWidth(getContext());
         int width = oryWidth / 2;
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
             photoURL = item.getFullBackdropPath(Result.BackDropSize.original);
-            int with = oryWidth * 2 / 3;
+            width = oryWidth * 2 / 3;
         }
+
+        viewHolder.rlMovieContainer.setMinimumWidth(width);
+        viewHolder.tvPlayTriangle.setVisibility(getVideoVisibility(item));
+        viewHolder.tvOverview.setText(item.getOverview());
+        viewHolder.tvTitle.setText(item.getTitle());
         Picasso.with(getContext()).load(photoURL)
                 .resize(width, 0)
                 .transform(new RoundedCornersTransformation(10, 10))
@@ -134,20 +142,24 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void configureViewHolderVideo(ViewHolderVideo viewHolder, int position) {
         Result item = mItems.get(position);
-        //viewHolder.tvOverview.setText(item.getOverview());
-        //viewHolder.tvTitle.setText(item.getTitle());
         String photoURL = item.getFullBackdropPath(Result.BackDropSize.original);
         int oryWidth = Utils.getDisplayWidth(getContext());
         int width = oryWidth;
         if (Configuration.ORIENTATION_LANDSCAPE == getContext().getResources().getConfiguration().orientation) {
-            int with = oryWidth;
+            width = oryWidth;
         }
+        viewHolder.rlMovieContainer.setMinimumWidth(width);
+        viewHolder.tvPlayTriangle.setVisibility(getVideoVisibility(item));
         Picasso.with(getContext()).load(photoURL)
                 .resize(width, 0)
                 .transform(new RoundedCornersTransformation(10, 10))
                 .placeholder(R.drawable.ic_rotate_left_white_24dp)
                 .error(R.drawable.ic_block_white_24dp)
                 .into(viewHolder.ivMovieImage);
+    }
+
+    private int getVideoVisibility(Result item) {
+        return (item.getYouTubeTrailerKey() == null ? View.INVISIBLE : View.VISIBLE);
     }
 
 

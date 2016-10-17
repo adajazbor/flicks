@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, String res) {
                     com.ada.flicks.network.dto.trailer.Response reponse = Utils.parseJSON(res, com.ada.flicks.network.dto.trailer.Response.class);
                     movie.setYouTubeTrailerKey((reponse.getFirstTrailer() == null ? null : reponse.getFirstTrailer().getKey()));
+                    aToDoAdapter.notifyDataSetChanged();
                 }
             }, movie.getId());
         }

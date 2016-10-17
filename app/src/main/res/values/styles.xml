@@ -49,4 +49,13 @@
         <item name="android:textColor">@android:color/holo_red_dark</item>
     </style>
 
+    <style name="startTriangle">
+        <item name="android:textColor">@color/colorAlmostWhite</item>
+        <item name="android:textSize">50dp</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:alpha">0.7</item>
+        <item name="android:text">&#9654;</item>
+    </style>
+
+
 </resources>
